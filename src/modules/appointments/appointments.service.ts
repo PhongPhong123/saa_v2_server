@@ -147,7 +147,7 @@ export class AppointmentsService {
         return await this.prisma.appointment.findMany({
             where: {
                 tags: {
-                    equals: tags,
+                    // todo
                 },
             },
         });
@@ -185,8 +185,9 @@ export class AppointmentsService {
      * Create an appointment for a person with the given personId
      * @param {string} person_id - string
      * @param {Appointment} appointment - Appointment
+     * @param tags
      */
-    async createOne(person_id: string, appointment: Appointment) {
+    async createOne(person_id: string, appointment: Appointment, tags: string[]) {
         await this.prisma.person.update({
             where: {
                 id: person_id,
@@ -198,7 +199,11 @@ export class AppointmentsService {
                         content: appointment.content,
                         limit: appointment.limit,
                         price: appointment.price,
-                        tags: appointment.tags,
+                        tags: {
+                            connect: {
+                                ...(tags.map(tag => ({id: tag})))
+                            }
+                        },
                         start_time: new Date(appointment.start_time),
                         end_time: new Date(appointment.end_time),
                     },

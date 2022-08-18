@@ -188,9 +188,9 @@ export class AppointmentsController {
     @Res() response: Response,
   ) {
     try {
-      const { personId, appointment } = body;
+      const { personId, appointment, tags } = body;
       const person = await this.personsService.findOne(personId);
-      await this.appointmentsService.createOne(person.id, appointment);
+      await this.appointmentsService.createOne(person.id, appointment, tags);
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: `${person.id} are created a new appointment`,
