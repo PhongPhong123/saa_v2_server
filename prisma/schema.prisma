@@ -49,6 +49,13 @@ model Profile {
   person     Person  @relation(fields: [person_id], references: [id])
 }
 
+model Tag {
+    id String @id @default(uuid()) @db.Uuid
+    name String @unique(map: "Tag_name_unique_constraint")
+    description String? @db.Text
+    appointment Appointment[]
+}
+
 model Appointment {
   id         String   @id @default(uuid()) @db.Uuid
   active Boolean @default(true)
@@ -60,7 +67,7 @@ model Appointment {
   price      Decimal  @db.Decimal(10, 2)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  tags       String[]
+  tags       Tag[]
   subscribed Int @default(0)
   person_id  String   @db.Uuid
   person     Person   @relation(fields: [person_id], references: [id])
