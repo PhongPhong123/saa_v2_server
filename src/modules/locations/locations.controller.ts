@@ -21,6 +21,15 @@ export class LocationsController {
         return response.status(HttpStatus.OK).json(locations);
     }
 
+    @Get('properties/name_codename')
+    getNameCities(@Res() response: Response) {
+        const locations = this.locationsService.getLocations();
+        return response.status(HttpStatus.OK).json(locations.map(location => ({
+            name: location.name,
+            codename: location.codename
+        })))
+    }
+
     @Get(':division_type')
     getLocationsWithDivisionType(@Param() params, @Res() response: Response) {
         const { division_type } = params;
