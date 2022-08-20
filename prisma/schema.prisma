@@ -67,7 +67,8 @@ model Appointment {
   price      Decimal  @db.Decimal(10, 2)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  tags       Tag[]
+  tag_id String @db.Uuid
+  tag       Tag @relation(fields: [tag_id], references: [id])
   subscribed Int @default(0)
   person_id  String   @db.Uuid
   person     Person   @relation(fields: [person_id], references: [id])
