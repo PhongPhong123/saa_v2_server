@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Appointment" ALTER COLUMN "start_time" SET DATA TYPE TIME(6),
+ALTER COLUMN "end_time" SET DATA TYPE TIME(6),
+ALTER COLUMN "held_on_time" SET DATA TYPE DATE;

@@ -140,17 +140,18 @@ export class AppointmentsService {
     /**
      * Find all appointments where the tags property is equal to the tags array passed in as an
      * argument.
-     * @param {string[]} tags - string[]
+     * @param {string} tag_id - string
      * @returns An array of appointments that match the tags.
      */
-    async filterByTags(tags: string[]) {
+    async filterByTags(tag_id: string) {
         return await this.prisma.appointment.findMany({
             where: {
-                tags: {
-                    // todo
+                tag: {
+                    id: tag_id
                 },
-            },
-        });
+                active: true,
+            }
+        })
     }
 
     /**
@@ -171,7 +172,7 @@ export class AppointmentsService {
                 end_time: true,
                 limit: true,
                 price: true,
-                tags: true,
+                tag: true,
                 subscribed: true,
             }
         });
@@ -185,9 +186,9 @@ export class AppointmentsService {
      * Create an appointment for a person with the given personId
      * @param {string} person_id - string
      * @param {Appointment} appointment - Appointment
-     * @param tags
+     * @param {string} tag_id
      */
-    async createOne(person_id: string, appointment: Appointment, tags: string[]) {
+    async createOne(person_id: string, appointment: Appointment, tag_id: string) {
         await this.prisma.person.update({
             where: {
                 id: person_id,
@@ -199,13 +200,14 @@ export class AppointmentsService {
                         content: appointment.content,
                         limit: appointment.limit,
                         price: appointment.price,
-                        tags: {
+                        start_time: appointment.start_time,
+                        end_time: appointment.end_time,
+                        held_on_time: new Date(appointment.held_on_time),
+                        tag: {
                             connect: {
-                                ...(tags.map(tag => ({id: tag})))
+                                id: tag_id,
                             }
-                        },
-                        start_time: new Date(appointment.start_time),
-                        end_time: new Date(appointment.end_time),
+                        }
                     },
                 },
             },

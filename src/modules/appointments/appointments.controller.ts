@@ -161,11 +161,11 @@ export class AppointmentsController {
   @Get('filter')
   async FilterByTags(
     @Res() response: Response,
-    @Query() query: { tags: string[] },
+    @Query() query: { tag_id: string },
   ) {
     return response
       .status(HttpStatus.OK)
-      .json(await this.appointmentsService.filterByTags(query.tags));
+      .json(await this.appointmentsService.filterByTags(query.tag_id));
   }
 
   @Get()
@@ -188,14 +188,15 @@ export class AppointmentsController {
     @Res() response: Response,
   ) {
     try {
-      const { personId, appointment, tags } = body;
-      const person = await this.personsService.findOne(personId);
-      await this.appointmentsService.createOne(person.id, appointment, tags);
+      const { person_id, appointment, tag_id } = body;
+      const person = await this.personsService.findOne(person_id);
+      await this.appointmentsService.createOne(person.id, appointment, tag_id);
       return response.status(HttpStatus.OK).json({
         statusCode: HttpStatus.OK,
         message: `${person.id} are created a new appointment`,
       });
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException();
     }
   }

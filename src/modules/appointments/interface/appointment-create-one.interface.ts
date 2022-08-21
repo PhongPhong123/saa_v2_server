@@ -1,7 +1,7 @@
 import { Appointment } from '@prisma/client';
 
 export interface IAppointmentCreateOne {
-  personId: string;
+  person_id: string;
   appointment: Appointment;
-  tags: string[]
+  tag_id: string
 }

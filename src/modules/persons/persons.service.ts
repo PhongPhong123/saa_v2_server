@@ -9,7 +9,7 @@ export class PersonsService {
   async findOne(id: string) {
     return await this.prisma.person.findUnique({
       where: {
-        id,
+        id: id,
       },
       include: {
         account: true,

@@ -12,6 +12,7 @@ import { AuthsModule } from '../auths/auths.module';
 import { AppointmentsModule } from '../appointments/appointments.module';
 import { CachesModule } from '../caches/caches.module';
 import { ProfilesModule } from '../profiles/profiles.module';
+import { TagsModule } from "../tags/tags.module";
 import { ApiLogMiddleware } from '../../common/middlewares/apiLog.middleware';
 
 @Module({
@@ -32,7 +33,8 @@ import { ApiLogMiddleware } from '../../common/middlewares/apiLog.middleware';
         AuthsModule,
         AppointmentsModule,
         CachesModule,
-        ProfilesModule
+        ProfilesModule,
+        TagsModule,
     ],
     controllers: [AppController],
     providers: [AppService],
