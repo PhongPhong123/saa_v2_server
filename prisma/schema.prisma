@@ -61,6 +61,7 @@ model Appointment {
   active Boolean @default(true)
   title      String   @db.VarChar(20)
   content    String   @db.VarChar(100)
+  held_on_time DateTime
   start_time DateTime
   end_time   DateTime
   limit      Int      @default(1)
