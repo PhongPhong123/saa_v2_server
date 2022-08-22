@@ -9,7 +9,7 @@ export class TagsController {
     @Get()
     async findAll(@Res() response: Response) {
         try {
-            return response.status(HttpStatus.OK).json(this.tagsService.findAll());
+            return response.status(HttpStatus.OK).json(await this.tagsService.findAll());
         } catch (error) {
 
         }
