@@ -70,7 +70,7 @@ model Appointment {
   subscribed         Int                            @default(0)
   active             Boolean                        @default(true)
   tag_id             String                         @db.Uuid
-  held_on_time       DateTime                       @db.Date
+  held_on_time       DateTime                       @db.Timestamptz(6)
   person             Person                         @relation(fields: [person_id], references: [id])
   tag                Tag                            @relation(fields: [tag_id], references: [id])
   subscribed_persons PersonsSubscribeAppointments[]

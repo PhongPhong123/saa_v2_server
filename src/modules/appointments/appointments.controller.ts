@@ -25,6 +25,18 @@ export class AppointmentsController {
     private personsService: PersonsService,
   ) {}
 
+  @Get("features/searchs")
+  async searchFeature(@Body() body: {tag_id: string, destination: string, date: string}, @Res() response: Response) {
+    try {
+      const { tag_id, destination, date } = body;
+      const appointments = await this.appointmentsService.searchFeature(tag_id, destination, date);
+      return response.status(HttpStatus.OK).json(appointments);
+    } catch (error) {
+      console.log(error)
+      throw new InternalServerErrorException();
+    }
+  }
+
   @Get('searchs')
   async findAppointmentsByPersonProfileField(
     @Res() response: Response,

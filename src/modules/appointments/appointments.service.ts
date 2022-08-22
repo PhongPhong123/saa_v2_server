@@ -11,6 +11,22 @@ import { EProfile_Field } from '../../common/enums/profile-filed.enum';
 export class AppointmentsService {
     constructor (private prisma: PrismaService) { }
 
+    async searchFeature(tag_id: string, destination: string, date: string) {
+        return await this.prisma.appointment.findMany({
+            where: {
+                tag_id,
+                AND: {
+                    held_on_time: new Date(date),
+                    AND: {
+                        person: {
+                            profile: { address: destination },
+                        },
+                    },
+                },
+            }
+        })
+    }
+
     async findAppointmentsByPersonProfileField(field: string, value: string | number) {
         return await this.prisma.appointment.findMany({
             where: {
