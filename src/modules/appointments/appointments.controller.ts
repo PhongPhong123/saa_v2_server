@@ -26,9 +26,9 @@ export class AppointmentsController {
   ) {}
 
   @Get("features/searchs")
-  async searchFeature(@Body() body: {tag_id: string, destination: string, date: string}, @Res() response: Response) {
+  async searchFeature(@Query() query: {tag_id: string, destination: string, date: string}, @Res() response: Response) {
     try {
-      const { tag_id, destination, date } = body;
+      const { tag_id, destination, date } = query;
       const appointments = await this.appointmentsService.searchFeature(tag_id, destination, date);
       return response.status(HttpStatus.OK).json(appointments);
     } catch (error) {
