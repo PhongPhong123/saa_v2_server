@@ -1,10 +1,19 @@
-import {Body, Controller, HttpStatus, InternalServerErrorException, Post, Res} from "@nestjs/common";
+import {Body, Controller, Get, HttpStatus, InternalServerErrorException, Post, Res} from "@nestjs/common";
 import { Response } from "express";
 import { TagsService } from "./tags.service";
 
 @Controller('tags')
 export class TagsController {
     constructor(private tagsService: TagsService) {}
+
+    @Get()
+    async findAll(@Res() response: Response) {
+        try {
+            return response.status(HttpStatus.OK).json(this.tagsService.findAll());
+        } catch (error) {
+
+        }
+    }
 
     @Post()
     async createOne(@Res() response: Response, @Body() body: {name: string, description?: string}) {
